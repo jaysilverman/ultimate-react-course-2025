@@ -1,0 +1,12 @@
+.center {
+    margin: auto;
+    width: max-content;
+}
+
+.horizontal-margin {
+    margin-inline: 10px;
+}
+
+.top-margin {
+    margin-top: 10px;
+}
