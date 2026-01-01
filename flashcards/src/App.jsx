@@ -53,7 +53,6 @@ function FlashCards() {
 
 function FlashCard({question, current, setSelected}) {
   function handleClick() {
-    console.log(current, question.id);
     (current !== question.id) ? setSelected(question.id) : setSelected(0);
   }
 
