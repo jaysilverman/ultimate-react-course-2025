@@ -14,7 +14,7 @@ function DateCounter() {
       <Range amount={step} setAmount={setStep} />
       <Incrementer amount={count} setAmount={setCount} increment={step} />
       <DateValue days={Number(count)} />
-      <Reset setAmount={setCount}/>
+      <Reset step={step} setStep={setStep} amount={count} setAmount={setCount}/>
     </>
   )
 }
@@ -69,14 +69,19 @@ function DateValue({days}) {
   )
 }
 
-function Reset({setAmount}) {
-  function handleClick() {
+function Reset({step, setStep, amount, setAmount}) {
+  function handleReset() {
+    setStep(1);
     setAmount(0);
   }
 
+  function hideReset() {
+    return step == 1 && amount == 0;
+  }
+
   return (
-    <div className="center">
-      <button onClick={handleClick}>Reset</button>
+    <div className={`center ${hideReset() ? 'hide' : ''}`}>
+      <button onClick={handleReset}>Reset</button>
     </div>
   )
 }
