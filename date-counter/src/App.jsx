@@ -11,21 +11,41 @@ function DateCounter() {
 
   return (
     <>
-      <Incrementer incrementType="Step" amount={step} setAmount={setStep} increment={1} />
-      <Incrementer incrementType="Count" amount={count} setAmount={setCount} increment={step} />
-      <DateValue days={count} />
+      <Range amount={step} setAmount={setStep} />
+      <Incrementer amount={count} setAmount={setCount} increment={step} />
+      <DateValue days={Number(count)} />
+      <Reset setAmount={setCount}/>
     </>
   )
 }
 
-function Incrementer({incrementType, amount, setAmount, increment}) {
-  const handleDecrementClick = () => { setAmount((a) => a - increment)}
-  const handleIncrementClick = () => { setAmount((a) => a + increment)}
+function Range({amount, setAmount}) {
+  function handleChange(e) {
+    setAmount(Number(e.target.value));
+  }
+
+  return (
+    <div className="center">
+      <input className="horizontal-margin" onChange={handleChange} type="range" min={1} max={20} value={amount} />
+      <span>Step: {amount}</span>
+    </div>
+  )
+}
+
+function Incrementer({amount, setAmount, increment}) {
+  const handleDecrementClick = () => { setAmount((a) => Number(a) - increment)}
+  const handleIncrementClick = () => { setAmount((a) => Number(a) + increment)}
+
+  function handleChange(e) {
+    if (e.target.value !== "") {
+      setAmount(e.target.value)
+    }
+  }
 
   return (
     <div className="center">
       <button onClick={handleDecrementClick} className="horizontal-margin" type="button">-</button>
-      <span>{incrementType}: {amount}</span>
+      <input onChange={handleChange} type="text" value={amount} />
       <button onClick={handleIncrementClick} className="horizontal-margin" type="button">+</button>
     </div>
   )
@@ -45,6 +65,18 @@ function DateValue({days}) {
   return (
     <div className="center top-margin">
       <h3 className="horizontal-margin">{days} days from today is {dateValue.toLocaleDateString("en-US", options)}</h3>
+    </div>
+  )
+}
+
+function Reset({setAmount}) {
+  function handleClick() {
+    setAmount(0);
+  }
+
+  return (
+    <div className="center">
+      <button onClick={handleClick}>Reset</button>
     </div>
   )
 }
